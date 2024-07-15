@@ -6,33 +6,19 @@ using SportTracker.Server.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
+builder
+    .Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<AppDbContext>(opt => opt.UseSqlite("Filename=../DB/SportTrackerServer.sqlite"));
+builder.Services.AddDbContext<AppDbContext>(opt =>
+    opt.UseSqlite("Filename=../DB/SportTrackerServer.sqlite")
+);
 builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
 
 var app = builder.Build();
-
-// configure sqlite db TODO is this needed?
-// using var scope = app.Services.CreateScope())
-// {
-//     var services = scope.ServiceProvider;
-
-//     try
-//     {
-//         var appDbContext = services.GetRequiredService<AppDbContext>();
-
-//     }
-//     catch (Exception ex)
-//     {
-//         var appDbContext = services.GetRequiredService<ILogger<Program>>();
-//         logger.LogError()
-//     }
-// }
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -46,6 +32,7 @@ else
     app.UseHsts();
 }
 
+// todo setup http (and disable in dev?)
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
