@@ -29,6 +29,8 @@ namespace SportTracker.Server.Models
         public async Task<SportEvent> AddEventAsync(SportEvent sportEvent)
         {
             sportEvent.UploadTimestamp = DateTime.UtcNow;
+            sportEvent.Type = (SportEventType)sportEvent.Type;
+
             var result = await _appDbContext.SportEvents.AddAsync(sportEvent);
             await _appDbContext.SaveChangesAsync();
             return result.Entity;

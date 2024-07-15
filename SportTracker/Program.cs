@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using SportTracker.Client.Pages;
 using SportTracker.Components;
@@ -11,7 +13,14 @@ builder
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.AddControllersWithViews();
+builder
+    .Services.AddControllersWithViews()
+    .AddJsonOptions(option =>
+    {
+        option.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+        );
+    });
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite("Filename=../DB/SportTrackerServer.sqlite")
