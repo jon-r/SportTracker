@@ -6,6 +6,6 @@ namespace SportTracker.Server.Models
     public interface ISportEventRepository
     {
         PagedResult<SportEvent> GetEvents(SportEventType? eventType, int page);
-        Task<SportEvent> AddEventAsync(SportEvent sportEvent);
+        Task<SportEvent> AddEventAsync(SportEventInput sportEvent);
     }
 }
