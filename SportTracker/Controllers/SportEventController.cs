@@ -19,9 +19,9 @@ namespace SportTracker.Controllers
         
         // todo add authorisation
         [HttpPost]
-        public async Task<ActionResult> AddEvent(SportEvent sportEvent)
+        public async Task<ActionResult> AddEventAsync(SportEvent sportEvent)
         {
-            return Ok(await _sportEventRepository.AddEvent(sportEvent));
+            return Ok(await _sportEventRepository.AddEventAsync(sportEvent));
         }
     }
 }

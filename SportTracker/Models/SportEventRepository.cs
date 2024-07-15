@@ -6,8 +6,9 @@ namespace SportTracker.Server.Models
     {
         private readonly AppDbContext _appDbContext = appDbContext;
 
-        public async Task<SportEvent> AddEvent(SportEvent sportEvent)
+        public async Task<SportEvent> AddEventAsync(SportEvent sportEvent)
         {
+            sportEvent.UploadTimestamp = DateTime.UtcNow;
             var result = await _appDbContext.SportEvents.AddAsync(sportEvent);
             await _appDbContext.SaveChangesAsync();
             return result.Entity;
