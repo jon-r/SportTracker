@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+		<ProjectReference Include="..\SportTracker.Shared\SportTracker.Shared.csproj" />
+	</ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.7" />
   </ItemGroup>
 
