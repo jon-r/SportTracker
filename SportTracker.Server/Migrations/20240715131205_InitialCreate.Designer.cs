@@ -11,7 +11,7 @@ using SportTracker.Server.Models;
 namespace SportTracker.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240715091231_InitialCreate")]
+    [Migration("20240715131205_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,19 +24,20 @@ namespace SportTracker.Migrations
                 {
                     b.Property<int>("SportEventId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("Relational:JsonPropertyName", "id");
 
-                    b.Property<int>("Laps")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("TimeSeconds")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("UploadTimestamp")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Distance")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EventType")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Time")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("SportEventId");
 

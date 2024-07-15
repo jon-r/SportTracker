@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using SportTracker.Server.Models;
 using SportTracker.Shared.Models;
 
-namespace SportTracker.Controllers
+namespace SportTracker.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

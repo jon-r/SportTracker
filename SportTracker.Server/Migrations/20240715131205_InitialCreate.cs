@@ -17,10 +17,10 @@ namespace SportTracker.Migrations
                 {
                     SportEventId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Type = table.Column<int>(type: "INTEGER", nullable: false),
-                    UploadTimestamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Laps = table.Column<int>(type: "INTEGER", nullable: false),
-                    TimeSeconds = table.Column<int>(type: "INTEGER", nullable: false)
+                    EventType = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Distance = table.Column<int>(type: "INTEGER", nullable: false),
+                    Time = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

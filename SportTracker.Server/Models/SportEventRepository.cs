@@ -14,7 +14,7 @@ namespace SportTracker.Server.Models
             if (eventType != null)
             {
                 return _appDbContext
-                    .SportEvents.Where(e => e.Type == eventType)
+                    .SportEvents.Where(e => e.EventType == eventType)
                     .OrderBy(e => e.SportEventId)
                     .GetPaged(page, pageSize);
             }
@@ -28,8 +28,8 @@ namespace SportTracker.Server.Models
 
         public async Task<SportEvent> AddEventAsync(SportEvent sportEvent)
         {
-            sportEvent.UploadTimestamp = DateTime.UtcNow;
-            sportEvent.Type = (SportEventType)sportEvent.Type;
+            sportEvent.CreatedAt = DateTime.UtcNow;
+            sportEvent.EventType = (SportEventType)sportEvent.EventType;
 
             var result = await _appDbContext.SportEvents.AddAsync(sportEvent);
             await _appDbContext.SaveChangesAsync();

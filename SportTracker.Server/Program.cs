@@ -2,7 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using SportTracker.Client.Pages;
-using SportTracker.Components;
+using SportTracker.Server.Components;
 using SportTracker.Server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
