@@ -28,21 +28,21 @@ namespace SportTracker.Server.Models
 
         public async Task<SportEvent> AddEventAsync(SportEventInput sportEventInput)
         {
-            var sportEvent = new SportEvent();
-            sportEvent.EventType = (SportEventType)sportEventInput.EventType;
-            sportEvent.Distance = _distanceFromEventType(
-                sportEventInput.Laps,
-                sportEvent.EventType
-            );
-            sportEvent.Time = sportEventInput.Minutes * 60;
-            sportEvent.CreatedAt = DateTime.UtcNow;
+            var eventType = (SportEventType)sportEventInput.EventType;
+            var sportEvent = new SportEvent
+            {
+                EventType = eventType,
+                Time = sportEventInput.Time * 60,
+                Distance = DistanceFromEventType(sportEventInput.Laps, eventType),
+                CreatedAt = DateTime.UtcNow
+            };
 
             var result = await _appDbContext.SportEvents.AddAsync(sportEvent);
             await _appDbContext.SaveChangesAsync();
             return result.Entity;
         }
 
-        private int _distanceFromEventType(int laps, SportEventType eventType)
+        private static int DistanceFromEventType(int laps, SportEventType eventType)
         {
             switch (eventType)
             {

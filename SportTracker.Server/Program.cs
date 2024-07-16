@@ -2,6 +2,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using SportTracker.Client.Pages;
+using SportTracker.Client.Pages.Event;
+using SportTracker.Client.Services;
+using SportTracker.Client.Shared;
 using SportTracker.Server.Components;
 using SportTracker.Server.Models;
 
@@ -27,6 +30,15 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 );
 builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
 
+// todo try to remove these
+builder.Services.AddScoped<ISportEventService, SportEventService>();
+builder.Services.AddScoped<IHttpService, HttpService>();
+builder.Services.AddScoped(x =>
+{
+    var apiUrl = new Uri("http://localhost:5287");
+    return new HttpClient() { BaseAddress = apiUrl };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -50,7 +62,7 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(Home).Assembly);
+    .AddAdditionalAssemblies(typeof(Add).Assembly);
 
 app.MapControllers();
 

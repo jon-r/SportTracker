@@ -1,0 +1,46 @@
+@inject ISportEventService SportEventService
+
+@* todo figure out how to make this client only render, mainly to decouple the Service *@
+
+<EditForm Model="@eventInput" OnValidSubmit="SubmitEvent">
+    <label>
+        Time:
+        <InputNumber @bind-Value="@eventInput.Time" />
+    </label>
+
+    <label>
+        Lengths:
+        <InputNumber @bind-Value="@eventInput.Laps" />
+    </label>
+
+    <button disabled="@loading" type="submit">
+        Submit
+    </button>
+</EditForm>
+
+@code {
+    string Title = "Blazor";
+    bool loading = false;
+
+    SportEventInput eventInput = new SportEventInput
+        {
+            EventType = SportEventType.Swimming,
+            Time = 0,
+            Laps = 0,
+        };
+
+    async Task SubmitEvent()
+    {
+        loading = true;
+        try
+        {
+            await SportEventService.AddSportEvent(eventInput);
+            // todo feedback on success
+            Console.WriteLine("added successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("failed", ex.Message);
+        }
+    }
+}

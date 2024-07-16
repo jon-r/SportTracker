@@ -2,7 +2,7 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32804.182
 MinimumVisualStudioVersion = 16.0.0.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportTracker\SportTracker", "SportTracker\SportTracker.csproj", "{10317E89-7460-4F16-922F-42A8A779A6C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportTracker\SportTracker.Server", "SportTracker.Server\SportTracker.Server.csproj", "{10317E89-7460-4F16-922F-42A8A779A6C4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportTracker.Client", "SportTracker.Client\SportTracker.Client.csproj", "{7577948E-1C3E-4FAB-8A42-BB229BC83C59}"
 EndProject
