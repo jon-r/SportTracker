@@ -27,8 +27,10 @@ builder
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite("Filename=../DB/SportTrackerServer.sqlite")
 );
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
 builder.Services.AddScoped<ISportEventService, SportEventServerService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 var app = builder.Build();
 

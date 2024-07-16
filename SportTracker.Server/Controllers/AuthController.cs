@@ -10,16 +10,11 @@ namespace SportTracker.Server.Controllers
     {
         private readonly IAuthRepository _authRepository = authRepository;
 
+        // todo have this return 40X rather than 500 error
         [HttpPost("login")]
         public ActionResult Login([FromBody] AuthRequest authRequest)
         {
             return Ok(_authRepository.Authenticate(authRequest));
-        }
-
-        [HttpPost("setup")]
-        public async Task<ActionResult> AddUserAsync([FromBody] User user)
-        {
-            return Ok(await _authRepository.AddUserAsync(user));
         }
     }
 }
