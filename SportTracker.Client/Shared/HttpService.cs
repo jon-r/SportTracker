@@ -51,7 +51,7 @@ namespace SportTracker.Client.Shared
             return request;
         }
 
-        private async Task<T?> SendRequest<T>(HttpRequestMessage request)
+        private async Task<T> SendRequest<T>(HttpRequestMessage request)
         {
             // todo auth, logout if 401
 
@@ -63,6 +63,7 @@ namespace SportTracker.Client.Shared
                 throw new Exception(error?["message"]);
             }
 
+            // todo handle null response in error
             // var options = new JsonSerializerOptions();
             // options.PropertyNameCaseInsensitive = true;
             // options.Converters.Add(new StringConverter());
