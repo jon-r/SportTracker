@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using SportTracker.Client.Services;
 using SportTracker.Client.Shared;
+using SportTracker.Shared.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.Services.AddScoped<ISportEventService, SportEventService>();
+builder.Services.AddScoped<ISportEventService, SportEventClientService>();
 builder.Services.AddScoped<IHttpService, HttpService>();
 builder.Services.AddScoped(x =>
 {

@@ -1,6 +1,6 @@
 using SportTracker.Shared.Models;
 
-namespace SportTracker.Client.Services
+namespace SportTracker.Shared.Services
 {
     public interface ISportEventService
     {

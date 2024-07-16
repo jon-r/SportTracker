@@ -51,7 +51,7 @@ namespace SportTracker.Client.Shared
             return request;
         }
 
-        private async Task<T> SendRequest<T>(HttpRequestMessage request)
+        private async Task<T?> SendRequest<T>(HttpRequestMessage request)
         {
             // todo auth, logout if 401
 

@@ -1,9 +1,10 @@
 using SportTracker.Client.Shared;
 using SportTracker.Shared.Models;
+using SportTracker.Shared.Services;
 
 namespace SportTracker.Client.Services
 {
-    public class SportEventService(IHttpService httpService) : ISportEventService
+    public class SportEventClientService(IHttpService httpService) : ISportEventService
     {
         private readonly IHttpService _httpService = httpService;
 
