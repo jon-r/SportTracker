@@ -30,14 +30,19 @@ namespace SportTracker.Client.Shared
             }
 
             var allCookies = cookieString.Split(';');
-            return allCookies.FirstOrDefault(cookie =>
+
+            foreach (var cookie in allCookies)
+            {
+                if (!string.IsNullOrEmpty(cookie) && cookie.IndexOf('=') > 0)
                 {
-                    if (!string.IsNullOrEmpty(cookie) && cookie.IndexOf('=') > 0)
+                    if (cookie[..cookie.IndexOf('=')].Trim().Equals(key.ToString()))
                     {
-                        return cookie[..cookie.IndexOf('=')].Trim().Equals(key.ToString());
+                        return cookie[(cookie.IndexOf('=') + 1)..];
                     }
-                    return false;
-                }) ?? "";
+                }
+            }
+
+            return fallback;
         }
 
         public async Task Delete(Cookies key)

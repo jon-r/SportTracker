@@ -1,6 +1,8 @@
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using SportTracker.Shared.Models;
 
 namespace SportTracker.Client.Shared
 {
@@ -11,9 +13,10 @@ namespace SportTracker.Client.Shared
         Task<T> Post<T>(string uri, object value);
     }
 
-    public class HttpService(HttpClient httpClient) : IHttpService
+    public class HttpService(HttpClient httpClient, ICookiesService cookiesService) : IHttpService
     {
         private readonly HttpClient _httpClient = httpClient;
+        private readonly ICookiesService _cookiesService = cookiesService;
 
         public async Task<T> Get<T>(string uri)
         {
@@ -53,7 +56,8 @@ namespace SportTracker.Client.Shared
 
         private async Task<T> SendRequest<T>(HttpRequestMessage request)
         {
-            // todo auth, logout if 401
+            await AddJwtHeader(request);
+            // todo logout if 401
 
             using var response = await _httpClient.SendAsync(request);
 
@@ -72,7 +76,8 @@ namespace SportTracker.Client.Shared
 
         private async Task SendRequest(HttpRequestMessage request)
         {
-            // todo auth, logout if 401
+            await AddJwtHeader(request);
+            // todo logout if 401
 
             using var response = await _httpClient.SendAsync(request);
 
@@ -80,6 +85,15 @@ namespace SportTracker.Client.Shared
             {
                 var error = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
                 throw new Exception(error?["message"]);
+            }
+        }
+
+        private async Task AddJwtHeader(HttpRequestMessage request)
+        {
+            var jwt = await _cookiesService.Get(Cookies.Jwt);
+            if (jwt != null && !request.RequestUri.IsAbsoluteUri)
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
             }
         }
     }
