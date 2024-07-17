@@ -9,8 +9,7 @@ namespace SportTracker.Server.Services
     public interface IJwtService
     {
         public string GenerateToken(User user);
-
-        // todo validate/refresh token. also need the client to validate/refresh periodically
+        // todo refresh token. need the client to refresh periodically before the token expires
     }
 
     public class JwtService : IJwtService
@@ -23,7 +22,7 @@ namespace SportTracker.Server.Services
             ); // fixme get something better
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity([new Claim("user", user.Username.ToString())]),
+                Subject = new ClaimsIdentity([new Claim("id", user.Id.ToString())]),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),

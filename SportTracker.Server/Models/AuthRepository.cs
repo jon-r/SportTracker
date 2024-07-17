@@ -1,3 +1,5 @@
+using System.Security.Authentication;
+using Microsoft.EntityFrameworkCore;
 using SportTracker.Server.Services;
 using SportTracker.Shared.Models;
 
@@ -17,7 +19,7 @@ namespace SportTracker.Server.Models
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(authRequest.Password, user.PasswordHash))
             {
-                throw new ApplicationException("Incorrect username/password");
+                throw new AuthenticationException("Incorrect username/password");
             }
 
             AuthResponse response =

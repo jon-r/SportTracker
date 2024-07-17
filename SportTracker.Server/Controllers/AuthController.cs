@@ -10,7 +10,7 @@ namespace SportTracker.Server.Controllers
     {
         private readonly IAuthRepository _authRepository = authRepository;
 
-        // todo have this return 40X rather than 500 error
+        // todo have this return 40X or 30X rather than 500 error
         [HttpPost("login")]
         public ActionResult Login([FromBody] AuthRequest authRequest)
         {

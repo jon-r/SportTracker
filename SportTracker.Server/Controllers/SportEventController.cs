@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportTracker.Server.Models;
 using SportTracker.Shared.Models;
 
 namespace SportTracker.Server.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class SportEventController(ISportEventRepository sportEventRepository) : ControllerBase
@@ -16,7 +18,6 @@ namespace SportTracker.Server.Controllers
             return Ok(_sportEventRepository.GetEvents(eventType, page));
         }
 
-        // todo add authorisation before deploying
         [HttpPost]
         public async Task<ActionResult> AddEventAsync([FromBody] SportEventInput sportEvent)
         {

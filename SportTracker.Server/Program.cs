@@ -1,6 +1,9 @@
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SportTracker.Client.Pages.Event;
 using SportTracker.Server.Components;
 using SportTracker.Server.Models;
@@ -32,6 +35,25 @@ builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
 builder.Services.AddScoped<ISportEventService, SportEventServerService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 
+builder.Services.AddCors();
+
+builder.Services.AddAuthentication();
+var key = Encoding.ASCII.GetBytes(
+    "50810017cb402db5d4e39d724384cc0dae83fec4b838b796f316a9849ced3639"
+); // fixme get something better
+builder
+    .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,11 +68,13 @@ else
     app.UseHsts();
 }
 
-// todo setup http (and disable in dev?)
-app.UseHttpsRedirection();
+// todo setup https
+// app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+
+app.UseAuthorization();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
