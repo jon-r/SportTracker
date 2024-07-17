@@ -1,7 +1,5 @@
 @inject ISportEventService SportEventService
 
-@* todo figure out how to make this client only render, mainly to decouple the Service *@
-
 <EditForm Model="@eventInput" OnValidSubmit="SubmitEvent">
     <label>
         Time:
@@ -19,7 +17,6 @@
 </EditForm>
 
 @code {
-    string Title = "Blazor";
     bool loading = false;
 
     SportEventInput eventInput = new SportEventInput
@@ -42,5 +39,7 @@
         {
             Console.WriteLine("failed", ex.Message);
         }
+
+        loading = false;
     }
 }

@@ -33,6 +33,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
 builder.Services.AddScoped<ISportEventService, SportEventServerService>();
+builder.Services.AddScoped<IUserAuthService, UserAuthServerService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 
 builder.Services.AddCors();

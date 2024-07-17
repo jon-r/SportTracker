@@ -33,7 +33,7 @@ namespace SportTracker.Client.Shared
             await SendRequest(request);
         }
 
-        private HttpRequestMessage CreateRequest(
+        private static HttpRequestMessage CreateRequest(
             HttpMethod method,
             string uri,
             object? value = null
