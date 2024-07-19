@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using SportTracker.Client.Pages.Event;
+//using SportTracker.Client.Pages.Event;
 using SportTracker.Server.Components;
 using SportTracker.Server.Models;
 using SportTracker.Server.Services;
-using SportTracker.Shared.Services;
+//using SportTracker.Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder
     .Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-    //.AddInteractiveWebAssemblyComponents();
+//.AddInteractiveWebAssemblyComponents();
 
 //builder
 //    .Services.AddControllersWithViews()
@@ -27,15 +27,16 @@ builder
 //        );
 //    });
 
-//builder.Services.AddDbContext<AppDbContext>(opt =>
-//    opt.UseSqlite("Filename=../DB/SportTrackerServer.sqlite")
-//);
+builder.Services.AddDbContext<AppDbContext>(opt =>
+    opt.UseSqlite("Filename=../DB/SportTrackerServer.sqlite;Mode=ReadWrite;")
+);
 
-//builder.Services.AddScoped<IAuthRepository, AuthRepository>();
-//builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
+
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
 //builder.Services.AddScoped<ISportEventService, SportEventServerService>();
 //builder.Services.AddScoped<IUserAuthService, UserAuthServerService>();
-//builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 //builder.Services.AddCors();
 
