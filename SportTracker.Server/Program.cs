@@ -26,7 +26,7 @@ builder
 //            new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
 //        );
 //    });
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite("Filename=../DB/SportTrackerServer.sqlite;Mode=ReadWrite;")
 );
@@ -36,11 +36,20 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
 //builder.Services.AddScoped<ISportEventService, SportEventServerService>();
 //builder.Services.AddScoped<IUserAuthService, UserAuthServerService>();
-builder.Services.AddScoped<IJwtService, JwtService>();
+//builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IAuthHandlerService, AuthHanderService>();
 
 //builder.Services.AddCors();
 
-//builder.Services.AddAuthentication();
+builder.Services.AddAuthentication()
+    .AddCookie(opts =>
+    {
+        opts.LoginPath = "/login";
+        opts.SlidingExpiration = true;
+        opts.ExpireTimeSpan = TimeSpan.FromDays(7);
+    });
+builder.Services.AddAuthorization();
+builder.Services.AddCascadingAuthenticationState();
 //var key = Encoding.ASCII.GetBytes(
 //    "50810017cb402db5d4e39d724384cc0dae83fec4b838b796f316a9849ced3639"
 //); // fixme get something better
@@ -65,7 +74,7 @@ var app = builder.Build();
     app.UseWebAssemblyDebugging();
 }
 else*/
-if (!app.Environment.IsDevelopment()) 
+if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -76,14 +85,14 @@ if (!app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+app.UseAuthorization();
+app.UseAuthentication();
 app.UseAntiforgery();
-
-//app.UseAuthorization();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-    //.AddInteractiveWebAssemblyRenderMode()
-    //.AddAdditionalAssemblies(typeof(Add).Assembly);
+//.AddInteractiveWebAssemblyRenderMode()
+//.AddAdditionalAssemblies(typeof(Add).Assembly);
 
 //app.MapControllers();
 

@@ -1,0 +1,33 @@
+@page "/login"
+
+@inject IAuthHandlerService authHandlerService
+@inject NavigationManager navigationManager
+
+<h3>Login</h3>
+
+<EditForm method="post" Model="LoginInput" OnSubmit="SubmitLogin" FormName="UserLogin">
+    <label>
+        Username:
+        <InputText @bind-Value="LoginInput.Username" />
+    </label>
+
+    <label>
+        Password:
+        <InputText @bind-Value="LoginInput.Password" type="password" />
+    </label>
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+
+@code {
+    [SupplyParameterFromForm]
+    public AuthRequest LoginInput { get; set; } = new ();
+
+    public async Task SubmitLogin()
+    {
+        await authHandlerService.Login(LoginInput);
+
+        navigationManager.NavigateTo("/login");
+    }
+}

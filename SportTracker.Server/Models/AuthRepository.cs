@@ -5,27 +5,22 @@ using SportTracker.Shared.Models;
 
 namespace SportTracker.Server.Models
 {
-    public class AuthRepository(AppDbContext appDbContext, IJwtService jwtService) : IAuthRepository
+    public class AuthRepository(AppDbContext appDbContext /*IJwtService jwtService*/) : IAuthRepository
     {
         private readonly AppDbContext _appDbContext = appDbContext;
-
-        private readonly IJwtService _jwtService = jwtService;
-
+        
         public AuthResponse Authenticate(AuthRequest authRequest)
         {
             var user = _appDbContext.Users.SingleOrDefault(u => u.Username == authRequest.Username);
 
-            Console.WriteLine(user?.PasswordHash);
+            Console.WriteLine($"hash: {user?.PasswordHash}");
 
-            if (user == null || !BCrypt.Net.BCrypt.Verify(authRequest.Password, user.PasswordHash))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(authRequest.Password, user?.PasswordHash))
             {
-                throw new AuthenticationException("Incorrect username/password");
+                throw new AuthenticationException($"Incorrect username/password - {authRequest.Username}, {authRequest.Password}");
             }
 
-            AuthResponse response =
-                new() { Username = user.Username, Token = _jwtService.GenerateToken(user) };
-
-            return response;
+            return new() { Username = user.Username, Token = "unused" };
         }
     }
 }
