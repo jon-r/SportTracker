@@ -21,15 +21,20 @@ namespace SportTracker.Server.Services
               new Claim(type: ClaimTypes.Name, response.Username),
             };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var principle = new ClaimsPrincipal(identity);
 
-            await _httpContextAccessor.HttpContext.SignInAsync(principle);
+            await _httpContextAccessor.HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(identity),
+                new AuthenticationProperties
+                {
+                    IsPersistent = true
+                });
         }
 
         public async Task Logout()
         {
             await _httpContextAccessor.HttpContext.SignOutAsync();
         }
-        
+
     }
 }

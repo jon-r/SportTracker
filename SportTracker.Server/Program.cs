@@ -41,12 +41,14 @@ builder.Services.AddScoped<IAuthHandlerService, AuthHanderService>();
 
 //builder.Services.AddCors();
 
-builder.Services.AddAuthentication()
+builder.Services
+    .AddAuthentication()
     .AddCookie(opts =>
     {
         opts.LoginPath = "/login";
         opts.SlidingExpiration = true;
         opts.ExpireTimeSpan = TimeSpan.FromDays(7);
+        opts.Cookie.Name = "token";
     });
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
@@ -82,11 +84,13 @@ if (!app.Environment.IsDevelopment())
 }
 
 // todo setup https
-// app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-app.UseAuthorization();
+
 app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
