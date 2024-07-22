@@ -1,4 +1,4 @@
-namespace SportTracker.Shared.Data
+namespace SportTracker.Server.Data
 {
     public static class PagedResultExtensions
     {

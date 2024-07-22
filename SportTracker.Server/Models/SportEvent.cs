@@ -1,7 +1,6 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SportTracker.Shared.Models
+namespace SportTracker.Server.Models
 {
     public class SportEvent
     {
