@@ -3,38 +3,31 @@
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 
-<h3>Login</h3>
+<section class="card">
+    <div class="card-body">
+    <h3 class="card-title">Login</h3>
+    <EditForm method="post" Model="LoginInput" OnSubmit="OnSubmitLogin" FormName="UserLogin">
+        <label class="form-label" for="username">Username:</label>
+        <InputText class="form-control mb-3" @bind-Value="LoginInput.Username" id="username" required />
 
-<EditForm method="post" Model="LoginInput" OnSubmit="OnSubmitLogin" FormName="UserLogin">
-    <label>
-        Username:
-        <InputText @bind-Value="LoginInput.Username" />
-    </label>
+        <label class="form-label" for="password">Password:</label>
+        <InputText class="form-control mb-3" @bind-Value="LoginInput.Password" type="password" id="password" required />
 
-    <label>
-        Password:
-        <InputText @bind-Value="LoginInput.Password" type="password" />
-    </label>
-
-    <button type="submit">Submit</button>
-</EditForm>
-
+        <div class="d-flex justify-content-around">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </EditForm>
+    </div>
+</section>
 
 @code {
     [SupplyParameterFromForm]
-    AuthRequest LoginInput { get; set; } = new();
+    public AuthRequest LoginInput { get; set; } = new ();
 
-    async Task OnSubmitLogin()
+    public async Task SubmitLogin()
     {
-        try
-        {
-            await AuthService.Login(LoginInput);
-            NavigationManager.NavigateTo("/");
-        }
-        catch (Exception ex)
-        {
-            // todo setup error handling
-            Console.WriteLine("failed", ex.Message);
-        }
+        await authService.Login(LoginInput);
+
+        navigationManager.NavigateTo("/");
     }
 }
