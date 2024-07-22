@@ -14,7 +14,8 @@ namespace SportTracker.Migrations
                 name: "SportEvents",
                 columns: table => new
                 {
-                    SportEventId = table.Column<int>(type: "INTEGER", nullable: false)
+                    SportEventId = table
+                        .Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     EventType = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
@@ -24,14 +25,14 @@ namespace SportTracker.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SportEvents", x => x.SportEventId);
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "SportEvents");
+            migrationBuilder.DropTable(name: "SportEvents");
         }
     }
 }

@@ -5,7 +5,7 @@ namespace SportTracker.Server.Models
     public class AuthRepository(AppDbContext appDbContext) : IAuthRepository
     {
         private readonly AppDbContext _appDbContext = appDbContext;
-        
+
         public AuthResponse Authenticate(AuthRequest authRequest)
         {
             var user = _appDbContext.Users.SingleOrDefault(u => u.Username == authRequest.Username);

@@ -1,11 +1,11 @@
 @page "/login"
 
-@inject IAuthService authService
-@inject NavigationManager navigationManager
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
 
 <h3>Login</h3>
 
-<EditForm method="post" Model="LoginInput" OnSubmit="SubmitLogin" FormName="UserLogin">
+<EditForm method="post" Model="LoginInput" OnSubmit="OnSubmitLogin" FormName="UserLogin">
     <label>
         Username:
         <InputText @bind-Value="LoginInput.Username" />
@@ -22,12 +22,19 @@
 
 @code {
     [SupplyParameterFromForm]
-    public AuthRequest LoginInput { get; set; } = new ();
+    AuthRequest LoginInput { get; set; } = new();
 
-    public async Task SubmitLogin()
+    async Task OnSubmitLogin()
     {
-        await authService.Login(LoginInput);
-
-        navigationManager.NavigateTo("/");
+        try
+        {
+            await AuthService.Login(LoginInput);
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            // todo setup error handling
+            Console.WriteLine("failed", ex.Message);
+        }
     }
 }
