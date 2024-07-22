@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.32804.182
 MinimumVisualStudioVersion = 16.0.0.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportTracker.Server", "SportTracker.Server\SportTracker.Server.csproj", "{10317E89-7460-4F16-922F-42A8A779A6C4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportTracker.Client", "SportTracker.Client\SportTracker.Client.csproj", "{7577948E-1C3E-4FAB-8A42-BB229BC83C59}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportTracker.Shared", "SportTracker.Shared\SportTracker.Shared.csproj", "{B2C8FECE-9253-40C8-B999-487B11920D86}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTest", "..\BlazorTest\BlazorTest\BlazorTest.csproj", "{B3D58564-546A-46A5-8D8C-A5A0D98E1A68}"
@@ -21,10 +19,6 @@ Global
 		{10317E89-7460-4F16-922F-42A8A779A6C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10317E89-7460-4F16-922F-42A8A779A6C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10317E89-7460-4F16-922F-42A8A779A6C4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7577948E-1C3E-4FAB-8A42-BB229BC83C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7577948E-1C3E-4FAB-8A42-BB229BC83C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7577948E-1C3E-4FAB-8A42-BB229BC83C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7577948E-1C3E-4FAB-8A42-BB229BC83C59}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B2C8FECE-9253-40C8-B999-487B11920D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B2C8FECE-9253-40C8-B999-487B11920D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2C8FECE-9253-40C8-B999-487B11920D86}.Release|Any CPU.ActiveCfg = Release|Any CPU

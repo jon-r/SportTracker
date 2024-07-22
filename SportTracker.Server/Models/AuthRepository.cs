@@ -1,6 +1,4 @@
 using System.Security.Authentication;
-using Microsoft.EntityFrameworkCore;
-using SportTracker.Server.Services;
 using SportTracker.Shared.Models;
 
 namespace SportTracker.Server.Models

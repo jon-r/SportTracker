@@ -1,14 +1,7 @@
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-//using SportTracker.Client.Pages.Event;
 using SportTracker.Server.Components;
 using SportTracker.Server.Models;
 using SportTracker.Server.Services;
-//using SportTracker.Shared.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
