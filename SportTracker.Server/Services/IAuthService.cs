@@ -2,7 +2,7 @@
 
 namespace SportTracker.Server.Services
 {
-    public interface IAuthHandlerService
+    public interface IAuthService
     {
         public Task Login(AuthRequest request);
     }

@@ -37,12 +37,11 @@
         try
         {
             await SportEventRepository.AddEventAsync(EventInput);
-            // todo feedback on success
-            Console.WriteLine("added successfully");
             submitted = true;
         }
         catch (Exception ex)
         {
+            // todo setup error handling
             Console.WriteLine("failed", ex.Message);
         }
     }

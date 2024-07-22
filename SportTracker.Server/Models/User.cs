@@ -8,6 +8,8 @@ namespace SportTracker.Server.Models
         public required string Username { get; set; }
         public required string Password { get; set; }
 
+        public required string Name { get; set; }
+
         [JsonIgnore]
         public string? PasswordHash { get; set; }
     }

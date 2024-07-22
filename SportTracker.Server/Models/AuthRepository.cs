@@ -15,7 +15,7 @@ namespace SportTracker.Server.Models
                 throw new AuthenticationException($"Incorrect username/password");
             }
 
-            return new() { Username = user.Username };
+            return new() { Username = user.Username, Name = user.Name };
         }
     }
 }

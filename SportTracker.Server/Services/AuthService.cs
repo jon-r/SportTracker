@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SportTracker.Server.Services
 {
-    // todo rename to just authService when done
-    public class AuthHanderService(IHttpContextAccessor httpContextAccessor, IAuthRepository authRepository) : IAuthHandlerService
+    public class AuthService(IHttpContextAccessor httpContextAccessor, IAuthRepository authRepository) : IAuthService
     {
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
@@ -17,7 +16,7 @@ namespace SportTracker.Server.Services
             AuthResponse response = _authRepository.Authenticate(authRequest);
             var claims = new List<Claim>
             {
-              new Claim(type: ClaimTypes.Name, response.Username),
+              new Claim(type: ClaimTypes.Name, response.Name),
             };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

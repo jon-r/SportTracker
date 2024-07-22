@@ -8,6 +8,7 @@ namespace SportTracker.Server.Models
 
     public class AuthResponse
     {
+        public required string Name { get; set; }
         public required string Username { get; set; }
     }
 }

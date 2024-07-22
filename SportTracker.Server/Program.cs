@@ -9,34 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder
     .Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-//.AddInteractiveWebAssemblyComponents();
 
-//builder
-//    .Services.AddControllersWithViews()
-//    .AddJsonOptions(option =>
-//    {
-//        option.JsonSerializerOptions.Converters.Add(
-//            new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
-//        );
-//    });
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseSqlite("Filename=../DB/SportTrackerServer.sqlite;Mode=ReadWrite;")
+builder.Services.AddDbContext<AppDbContext>(opts =>
+    opts.UseSqlite("Filename=../DB/SportTrackerServer.sqlite;Mode=ReadWrite;")
 );
-
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
-//builder.Services.AddScoped<ISportEventService, SportEventServerService>();
-//builder.Services.AddScoped<IUserAuthService, UserAuthServerService>();
-//builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddScoped<IAuthHandlerService, AuthHanderService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
-//builder.Services.AddCors();
-
-builder.Services
-    .AddAuthentication()
-    .AddCookie(opts =>
+builder.Services.AddAuthentication().AddCookie(opts =>
     {
         opts.LoginPath = "/login";
         opts.SlidingExpiration = true;
@@ -45,30 +28,10 @@ builder.Services
     });
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
-//var key = Encoding.ASCII.GetBytes(
-//    "50810017cb402db5d4e39d724384cc0dae83fec4b838b796f316a9849ced3639"
-//); // fixme get something better
-//builder
-//    .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuerSigningKey = true,
-//            IssuerSigningKey = new SymmetricSecurityKey(key),
-//            ValidateIssuer = false,
-//            ValidateAudience = false
-//        };
-//    });
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-/*if (app.Environment.IsDevelopment())
-{
-    app.UseWebAssemblyDebugging();
-}
-else*/
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
@@ -76,7 +39,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// todo setup https
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -88,9 +50,5 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-//.AddInteractiveWebAssemblyRenderMode()
-//.AddAdditionalAssemblies(typeof(Add).Assembly);
-
-//app.MapControllers();
 
 app.Run();
