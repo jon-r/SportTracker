@@ -13,13 +13,12 @@ namespace SportTracker.Server.Models
         {
             var user = _appDbContext.Users.SingleOrDefault(u => u.Username == authRequest.Username);
 
-            Console.WriteLine($"hash: {user?.PasswordHash}");
-
             if (user == null || !BCrypt.Net.BCrypt.Verify(authRequest.Password, user?.PasswordHash))
             {
-                throw new AuthenticationException($"Incorrect username/password - {authRequest.Username}, {authRequest.Password}");
+                throw new AuthenticationException($"Incorrect username/password");
             }
 
+            // todo remove token
             return new() { Username = user.Username, Token = "unused" };
         }
     }

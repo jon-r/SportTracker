@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace SportTracker.Server.Services
 {
+    // todo rename to just authService when done
     public class AuthHanderService(IHttpContextAccessor httpContextAccessor, IAuthRepository authRepository) : IAuthHandlerService
     {
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;

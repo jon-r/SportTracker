@@ -1,8 +1,49 @@
 ﻿@page "/"
 @attribute [Authorize]
+@inject ISportEventRepository SportEventRepository
 
 <h3>Home</h3>
 
-@code {
+<EditForm method="post" Model="@EventInput" OnSubmit="SubmitEvent" Formname="SubmitEvent">
+    <label>
+        Time:
+        <InputNumber @bind-Value="EventInput.Time" />
+    </label>
 
+    <label>
+        Lengths:
+        <InputNumber @bind-Value="EventInput.Laps" />
+    </label>
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@if (submitted)
+{
+    <p>Hey, look at that, you placed the order!</p>
+}
+
+@code {
+    bool submitted = false;
+
+    [SupplyParameterFromForm]
+    SportEventInput EventInput { get; set; } = new()
+        {
+            EventType = SportEventType.Swimming,
+        };
+
+    async Task SubmitEvent()
+    {
+        try
+        {
+            await SportEventRepository.AddEventAsync(EventInput);
+            // todo feedback on success
+            Console.WriteLine("added successfully");
+            submitted = true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("failed", ex.Message);
+        }
+    }
 }
