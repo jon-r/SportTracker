@@ -1,12 +1,12 @@
 using System.Text.Json.Serialization;
 
-namespace SportTracker.Shared.Models
+namespace SportTracker.Server.Models
 {
     public class User
     {
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
+        public required string Username { get; set; }
+        public required string Password { get; set; }
 
         [JsonIgnore]
         public string? PasswordHash { get; set; }

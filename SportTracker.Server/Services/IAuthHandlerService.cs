@@ -1,4 +1,4 @@
-﻿using SportTracker.Shared.Models;
+﻿using SportTracker.Server.Models;
 
 namespace SportTracker.Server.Services
 {

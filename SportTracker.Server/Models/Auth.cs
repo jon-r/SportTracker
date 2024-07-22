@@ -1,4 +1,4 @@
-namespace SportTracker.Shared.Models
+namespace SportTracker.Server.Models
 {
     public class AuthRequest
     {
@@ -8,8 +8,6 @@ namespace SportTracker.Shared.Models
 
     public class AuthResponse
     {
-        public string Username { get; set; }
-        public string Token { get; set; }
-        // todo refresh token?
+        public required string Username { get; set; }
     }
 }

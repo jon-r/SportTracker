@@ -1,9 +1,8 @@
 using System.Security.Authentication;
-using SportTracker.Shared.Models;
 
 namespace SportTracker.Server.Models
 {
-    public class AuthRepository(AppDbContext appDbContext /*IJwtService jwtService*/) : IAuthRepository
+    public class AuthRepository(AppDbContext appDbContext) : IAuthRepository
     {
         private readonly AppDbContext _appDbContext = appDbContext;
         
@@ -16,8 +15,7 @@ namespace SportTracker.Server.Models
                 throw new AuthenticationException($"Incorrect username/password");
             }
 
-            // todo remove token
-            return new() { Username = user.Username, Token = "unused" };
+            return new() { Username = user.Username };
         }
     }
 }

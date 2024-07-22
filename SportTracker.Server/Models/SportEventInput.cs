@@ -1,4 +1,4 @@
-namespace SportTracker.Shared.Models
+namespace SportTracker.Server.Models
 {
     public class SportEventInput
     {
