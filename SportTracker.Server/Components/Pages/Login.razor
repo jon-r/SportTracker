@@ -13,7 +13,7 @@
         <label class="form-label" for="password">Password:</label>
         <InputText class="form-control mb-3" @bind-Value="LoginInput.Password" type="password" id="password" required />
 
-        <div class="d-flex justify-content-around">
+        <div class="d-flex justify-content-end">
             <button class="btn btn-primary" type="submit">Submit</button>
         </div>
     </EditForm>
@@ -24,10 +24,10 @@
     [SupplyParameterFromForm]
     public AuthRequest LoginInput { get; set; } = new ();
 
-    public async Task SubmitLogin()
+    public async Task OnSubmitLogin()
     {
-        await authService.Login(LoginInput);
+        await AuthService.Login(LoginInput);
 
-        navigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/");
     }
 }
