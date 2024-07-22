@@ -2,9 +2,9 @@
 @attribute [Authorize]
 @inject ISportEventRepository SportEventRepository
 
-<h3>Home</h3>
+<h3>Submit Activity</h3>
 
-<EditForm method="post" Model="@EventInput" OnSubmit="SubmitEvent" Formname="SubmitEvent">
+<EditForm method="post" Model="@EventInput" OnSubmit="OnSubmitEvent" Formname="SubmitEvent">
     <label>
         Time:
         <InputNumber @bind-Value="EventInput.Time" />
@@ -20,19 +20,16 @@
 
 @if (submitted)
 {
-    <p>Hey, look at that, you placed the order!</p>
+    <p>Submit worked!!</p>
 }
 
 @code {
     bool submitted = false;
 
     [SupplyParameterFromForm]
-    SportEventInput EventInput { get; set; } = new()
-        {
-            EventType = SportEventType.Swimming,
-        };
+    SportEventInput EventInput { get; set; } = new() { EventType = SportEventType.Swimming, };
 
-    async Task SubmitEvent()
+    async Task OnSubmitEvent()
     {
         try
         {

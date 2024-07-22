@@ -6,9 +6,7 @@ using SportTracker.Server.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder
-    .Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<AppDbContext>(opts =>
@@ -19,7 +17,9 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
-builder.Services.AddAuthentication().AddCookie(opts =>
+builder
+    .Services.AddAuthentication()
+    .AddCookie(opts =>
     {
         opts.LoginPath = "/login";
         opts.SlidingExpiration = true;
@@ -48,7 +48,6 @@ app.UseAuthorization();
 
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.Run();
