@@ -3,9 +3,14 @@
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 
-<section class="card">
-    <div class="card-body">
-    <h3 class="card-title">Login</h3>
+<FormCard FormTitle="Login">
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-warning">
+            @errorMessage
+        </div>
+    }
+
     <EditForm method="post" Model="LoginInput" OnSubmit="OnSubmitLogin" FormName="UserLogin">
         <label class="form-label" for="username">Username:</label>
         <InputText class="form-control mb-3" @bind-Value="LoginInput.Username" id="username" required />
@@ -17,17 +22,25 @@
             <button class="btn btn-primary" type="submit">Submit</button>
         </div>
     </EditForm>
-    </div>
-</section>
+</FormCard>
 
 @code {
+    string? errorMessage;
+
     [SupplyParameterFromForm]
-    public AuthRequest LoginInput { get; set; } = new ();
+    public AuthRequest LoginInput { get; set; } = new();
 
     public async Task OnSubmitLogin()
     {
-        await AuthService.Login(LoginInput);
-
-        NavigationManager.NavigateTo("/");
+        try
+        {
+            await AuthService.Login(LoginInput);
+            NavigationManager.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("failed", ex.Message);
+            errorMessage = ex.Message;
+        }
     }
 }

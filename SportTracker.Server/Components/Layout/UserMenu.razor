@@ -2,19 +2,19 @@
 @inject NavigationManager NavigationManager
 
 <div class="text-end">
-<AuthorizeView>
-    <Authorized>
-        <h3 class="d-inline-block mb-0">@context.User.Identity?.Name</h3>
+    <AuthorizeView>
+        <Authorized>
+            <h3 class="d-inline-block mb-0">@context.User.Identity?.Name</h3>
 
-        <form class="d-inline-block" method="post" action="logout" @onsubmit="OnSubmiLogout" @formname="UserLogout">
-            <AntiforgeryToken />
-            <button class="btn btn-primary" type="submit">Log out</button>
-        </form>
-    </Authorized>
-    <NotAuthorized>
-        <h3>Sign In</h3>
-    </NotAuthorized>
-</AuthorizeView>
+            <form class="d-inline-block" method="post" action="logout" @onsubmit="OnSubmiLogout" @formname="UserLogout">
+                <AntiforgeryToken />
+                <button class="btn btn-primary" type="submit">Log out</button>
+            </form>
+        </Authorized>
+        <NotAuthorized>
+            <h3>Sign In</h3>
+        </NotAuthorized>
+    </AuthorizeView>
 </div>
 
 @code {
