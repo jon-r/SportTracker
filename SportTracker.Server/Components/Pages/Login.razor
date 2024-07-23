@@ -13,10 +13,20 @@
 
     <EditForm method="post" Model="LoginInput" OnSubmit="OnSubmitLogin" FormName="UserLogin">
         <label class="form-label" for="username">Username:</label>
-        <InputText class="form-control mb-3" @bind-Value="LoginInput.Username" id="username" required />
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <IconFace />
+            </span>
+            <InputText class="form-control" @bind-Value="LoginInput.Username" id="username" required />
+        </div>
 
         <label class="form-label" for="password">Password:</label>
-        <InputText class="form-control mb-3" @bind-Value="LoginInput.Password" type="password" id="password" required />
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+               <IconLock />
+            </span>
+            <InputText class="form-control" @bind-Value="LoginInput.Password" type="password" id="password" required />
+        </div>
 
         <div class="d-flex justify-content-end">
             <button class="btn btn-primary" type="submit">Submit</button>

@@ -17,10 +17,20 @@
 
     <EditForm method="post" Model="EventInput" OnSubmit="OnSubmitEvent" FormName="SubmitEvent">
         <label class="form-label" for="time">Time:</label>
-        <InputNumber class="form-control mb-3" @bind-Value="EventInput.Time" id="time" required min="1" />
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <IconTimer />
+            </span>
+            <InputNumber class="form-control" @bind-Value="EventInput.Time" id="time" required min="1" />
+        </div>
 
         <label class="form-label" for="laps">Laps:</label>
-        <InputNumber class="form-control mb-3" @bind-Value="EventInput.Laps" id="laps" required min="1" />
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <IconSpeed />
+            </span>
+            <InputNumber class="form-control" @bind-Value="EventInput.Laps" id="laps" required min="1" />
+        </div>
 
         <div class="d-flex justify-content-end">
             <button class="btn btn-primary" type="submit">Submit</button>
