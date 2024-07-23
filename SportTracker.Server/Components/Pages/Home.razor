@@ -2,28 +2,44 @@
 @attribute [Authorize]
 @inject ISportEventRepository SportEventRepository
 
-<h3>Submit Activity</h3>
+<FormCard FormTitle="Submit Activity">
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-warning">
+            @errorMessage
+        </div>
+    }
 
-<EditForm method="post" Model="@EventInput" OnSubmit="OnSubmitEvent" Formname="SubmitEvent">
-    <label>
-        Time:
-        <InputNumber @bind-Value="EventInput.Time" />
-    </label>
+    @if (submitted)
+    {
+        <div class="alert alert-success">Submitted!</div>
+    }
 
-    <label>
-        Lengths:
-        <InputNumber @bind-Value="EventInput.Laps" />
-    </label>
+    <EditForm method="post" Model="EventInput" OnSubmit="OnSubmitEvent" FormName="SubmitEvent">
+        <label class="form-label" for="time">Time:</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <IconTimer />
+            </span>
+            <InputNumber class="form-control" @bind-Value="EventInput.Time" id="time" required min="1" />
+        </div>
 
-    <button type="submit">Submit</button>
-</EditForm>
+        <label class="form-label" for="laps">Laps:</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <IconSpeed />
+            </span>
+            <InputNumber class="form-control" @bind-Value="EventInput.Laps" id="laps" required min="1" />
+        </div>
 
-@if (submitted)
-{
-    <p>Submit worked!!</p>
-}
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </EditForm>
+</FormCard>
 
 @code {
+    string? errorMessage;
     bool submitted = false;
 
     [SupplyParameterFromForm]
@@ -38,8 +54,8 @@
         }
         catch (Exception ex)
         {
-            // todo setup error handling
             Console.WriteLine("failed", ex.Message);
+            errorMessage = ex.Message;
         }
     }
 }

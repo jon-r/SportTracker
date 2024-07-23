@@ -3,15 +3,15 @@
 
 <AuthorizeView>
     <Authorized>
-        <h3>@context.User.Identity?.Name</h3>
+        <strong class="fs-5 ms-auto">@context.User.Identity?.Name</strong>
 
-        <form method="post" action="logout" @onsubmit="OnSubmiLogout" @formname="UserLogout">
+        <form class="d-inline-block" method="post" action="logout" @onsubmit="OnSubmiLogout" @formname="UserLogout">
             <AntiforgeryToken />
-            <button type="submit">Log out</button>
+            <button class="btn btn-primary" type="submit">Log out</button>
         </form>
     </Authorized>
     <NotAuthorized>
-        <h3>Sign In</h3>
+        <strong class="fs-5 ms-auto">Sign In</strong>
     </NotAuthorized>
 </AuthorizeView>
 

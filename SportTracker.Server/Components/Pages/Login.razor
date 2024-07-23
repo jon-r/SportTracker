@@ -3,28 +3,44 @@
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 
-<h3>Login</h3>
+<FormCard FormTitle="Login">
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-warning">
+            @errorMessage
+        </div>
+    }
 
-<EditForm method="post" Model="LoginInput" OnSubmit="OnSubmitLogin" FormName="UserLogin">
-    <label>
-        Username:
-        <InputText @bind-Value="LoginInput.Username" />
-    </label>
+    <EditForm method="post" Model="LoginInput" OnSubmit="OnSubmitLogin" FormName="UserLogin">
+        <label class="form-label" for="username">Username:</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+                <IconFace />
+            </span>
+            <InputText class="form-control" @bind-Value="LoginInput.Username" id="username" required />
+        </div>
 
-    <label>
-        Password:
-        <InputText @bind-Value="LoginInput.Password" type="password" />
-    </label>
+        <label class="form-label" for="password">Password:</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text">
+               <IconLock />
+            </span>
+            <InputText class="form-control" @bind-Value="LoginInput.Password" type="password" id="password" required />
+        </div>
 
-    <button type="submit">Submit</button>
-</EditForm>
-
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+    </EditForm>
+</FormCard>
 
 @code {
-    [SupplyParameterFromForm]
-    AuthRequest LoginInput { get; set; } = new();
+    string? errorMessage;
 
-    async Task OnSubmitLogin()
+    [SupplyParameterFromForm]
+    public AuthRequest LoginInput { get; set; } = new();
+
+    public async Task OnSubmitLogin()
     {
         try
         {
@@ -33,8 +49,8 @@
         }
         catch (Exception ex)
         {
-            // todo setup error handling
             Console.WriteLine("failed", ex.Message);
+            errorMessage = ex.Message;
         }
     }
 }

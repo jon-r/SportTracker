@@ -1,0 +1,15 @@
+﻿<section class="card bg-dark-subtle shadow-sm">
+    <div class="card-body">
+        <h3 class="card-title">@FormTitle</h3>
+
+        @ChildContent
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public string FormTitle { get; set; } = null!;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = null!;
+}
