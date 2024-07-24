@@ -1,3 +1,6 @@
+@using System.Reflection
+@inject IWebHostEnvironment Env
+
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark" data-bs-core="modern">
 <head>
@@ -6,10 +9,17 @@
     <base href="/" />
     <link rel="icon" href="/favicon.svg" />
 
-    @* todo - need to miniify and strip unused css from here for production *@
-    <link rel="stylesheet" href="/css/blazor-ui.css" />
-    <link rel="stylesheet" href="/css/halfmoon.css" />
-    <link rel="stylesheet" href="/css/halfmoon.modern.css" />
+    @if (Env.IsDevelopment())
+    {
+        <link rel="stylesheet" href="/css/halfmoon.css" />
+        <link rel="stylesheet" href="/css/halfmoon.modern.css" />
+        <link rel="stylesheet" href="/css/blazor-ui.css" />        
+    }
+    else 
+    {
+        <link rel="stylesheet" href="/css/styles.min.css?v=@(version())" />
+    }
+    
     <HeadOutlet />
 </head>
 <body>
@@ -17,3 +27,9 @@
     <script src="_framework/blazor.web.js"></script>
 </body>
 </html>
+
+@code {
+    string version () => Assembly.GetEntryAssembly()
+    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+    .InformationalVersion;
+}
