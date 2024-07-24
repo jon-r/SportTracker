@@ -25,7 +25,7 @@ namespace SportTracker.Server.Models
             }
         }
 
-        public async Task<SportEvent> AddEventAsync(SportEventInput sportEventInput)
+        public SportEvent AddEvent(SportEventInput sportEventInput)
         {
             var eventType = (SportEventType)sportEventInput.EventType;
             var sportEvent = new SportEvent
@@ -36,9 +36,16 @@ namespace SportTracker.Server.Models
                 CreatedAt = DateTime.UtcNow
             };
 
-            var result = await _appDbContext.SportEvents.AddAsync(sportEvent);
-            await _appDbContext.SaveChangesAsync();
+            var result =  _appDbContext.SportEvents.Add(sportEvent);
+            _appDbContext.SaveChanges();
+
             return result.Entity;
+        }
+
+        public void InsertEvent(SportEvent sportEvent)
+        {
+            _appDbContext.SportEvents.Add(sportEvent);
+            _appDbContext.SaveChanges();
         }
 
         private static int DistanceFromEventType(int laps, SportEventType eventType)

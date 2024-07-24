@@ -43,13 +43,13 @@
     bool submitted = false;
 
     [SupplyParameterFromForm]
-    SportEventInput EventInput { get; set; } = new() { EventType = SportEventType.Swimming, };
+    public SportEventInput EventInput { get; set; } = new() { EventType = SportEventType.Swimming, };
 
-    async Task OnSubmitEvent()
+    public void OnSubmitEvent()
     {
         try
         {
-            await SportEventRepository.AddEventAsync(EventInput);
+            SportEventRepository.AddEvent(EventInput);
             submitted = true;
         }
         catch (Exception ex)
