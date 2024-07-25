@@ -4,6 +4,7 @@ project.lock.json
 .DS_Store
 *.pyc
 nupkg/
+node_modules/
 
 # Visual Studio Code
 .vscode
@@ -33,9 +34,12 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
+/SportTracker.Server/wwwroot/css/styles.min.css
+
 # Visual Studio 2015
 .vs/
 
 
 # Database
 DB/
+
