@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using SportTracker.Server.Models.Users;
+using SportTracker.Server.Models.SportEvents;
 
 namespace SportTracker.Server.Models
 {

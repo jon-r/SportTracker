@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace SportTracker.Server.Models
+namespace SportTracker.Server.Models.Users
 {
     public class User
     {

@@ -1,6 +1,6 @@
 using SportTracker.Server.Data;
 
-namespace SportTracker.Server.Models
+namespace SportTracker.Server.Models.SportEvents
 {
     public interface ISportEventRepository
     {

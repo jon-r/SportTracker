@@ -1,6 +1,6 @@
 using SportTracker.Server.Data;
 
-namespace SportTracker.Server.Models
+namespace SportTracker.Server.Models.SportEvents
 {
     public class SportEventRepository(AppDbContext appDbContext) : ISportEventRepository
     {
@@ -27,7 +27,7 @@ namespace SportTracker.Server.Models
 
         public SportEvent AddEvent(SportEventInput sportEventInput)
         {
-            var eventType = (SportEventType)sportEventInput.EventType;
+            var eventType = sportEventInput.EventType;
             var sportEvent = new SportEvent
             {
                 EventType = eventType,
@@ -36,7 +36,7 @@ namespace SportTracker.Server.Models
                 CreatedAt = DateTime.UtcNow
             };
 
-            var result =  _appDbContext.SportEvents.Add(sportEvent);
+            var result = _appDbContext.SportEvents.Add(sportEvent);
             _appDbContext.SaveChanges();
 
             return result.Entity;

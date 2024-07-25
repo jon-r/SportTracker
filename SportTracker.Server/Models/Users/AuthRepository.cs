@@ -1,6 +1,6 @@
 using System.Security.Authentication;
 
-namespace SportTracker.Server.Models
+namespace SportTracker.Server.Models.Users
 {
     public class AuthRepository(AppDbContext appDbContext) : IAuthRepository
     {
