@@ -23,8 +23,9 @@ namespace SportTracker.Server.Models.Users
 
             if (user != null)
             {
-                user.Password = BCrypt.Net.BCrypt.HashPassword(authUpdateRequest.NewPassword);
+                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(authUpdateRequest.NewPassword);
                 user.Password = "**********";
+
 
                 _appDbContext.Users.Entry(user).CurrentValues.SetValues(user);
                 _appDbContext.SaveChanges();

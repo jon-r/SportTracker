@@ -1,14 +1,16 @@
 ﻿@page "/upload"
-@    using CsvHelper
-@    using CsvHelper.Configuration
-@    using System.Globalization
+
+@using CsvHelper
+@using CsvHelper.Configuration
+@using System.Globalization
+
 @attribute [Authorize]
 @inject ISportEventRepository SportEventRepository
 
 <EditForm method="post" Model="UploadInput" OnSubmit="UploadFile" Enhance FormName="UploadEvents" enctype="multipart/form-data">
     @if (submitted != null)
     {
-        <div class="alert alert-success">Submitted!</div>
+        <div class="alert alert-success">Submitted @(submitted) items!</div>
     }
     
     <InputFile name="UploadInput.File" />
@@ -69,7 +71,6 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine("failed", ex.Message);
             errorMessage = ex.Message;
         }
     }
