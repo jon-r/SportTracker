@@ -6,7 +6,7 @@ namespace SportTracker.Server.Models.Users
     {
         private readonly AppDbContext _appDbContext = appDbContext;
 
-        public AuthResponse Authenticate(AuthRequest authRequest)
+        public User Authenticate(AuthRequest authRequest)
         {
             var user = _appDbContext.Users.SingleOrDefault(u => u.Username == authRequest.Username);
 
@@ -15,7 +15,22 @@ namespace SportTracker.Server.Models.Users
                 throw new AuthenticationException($"Incorrect username/password");
             }
 
-            return new() { Username = user.Username, Name = user.Name };
+            return user;
+        }
+
+        public User UpdatePassword(AuthUpdateRequest authUpdateRequest) { 
+            var user = Authenticate(authUpdateRequest);
+
+            if (user != null)
+            {
+                user.Password = BCrypt.Net.BCrypt.HashPassword(authUpdateRequest.NewPassword);
+                user.Password = "**********";
+
+                _appDbContext.Users.Entry(user).CurrentValues.SetValues(user);
+                _appDbContext.SaveChanges();
+            }
+
+            return user;
         }
     }
 }

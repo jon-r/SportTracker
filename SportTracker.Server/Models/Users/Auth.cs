@@ -6,6 +6,11 @@ namespace SportTracker.Server.Models.Users
         public string Password { get; set; } = string.Empty;
     }
 
+    public class AuthUpdateRequest : AuthRequest
+    {
+        public string NewPassword { get; set; } = string.Empty;
+    }
+
     public class AuthResponse
     {
         public required string Name { get; set; }

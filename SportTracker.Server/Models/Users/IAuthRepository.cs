@@ -2,6 +2,8 @@ namespace SportTracker.Server.Models.Users
 {
     public interface IAuthRepository
     {
-        AuthResponse Authenticate(AuthRequest authRequest);
+        User Authenticate(AuthRequest authRequest);
+
+        User UpdatePassword(AuthUpdateRequest authUpdateRequest);
     }
 }
