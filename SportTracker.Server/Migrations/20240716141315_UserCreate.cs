@@ -29,8 +29,7 @@ namespace SportTracker.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: ["Id", "Username", "Password", "PasswordHash"],
-                // fixme password from env
-                values: [1, "Admin", "*******", BCrypt.Net.BCrypt.HashPassword("super_secret")]
+                values: [1, "Admin", "*******", BCrypt.Net.BCrypt.HashPassword("change_me")]
             );
         }
 

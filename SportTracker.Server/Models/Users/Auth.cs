@@ -1,9 +1,14 @@
-namespace SportTracker.Server.Models
+namespace SportTracker.Server.Models.Users
 {
     public class AuthRequest
     {
         public string Username { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
+    }
+
+    public class AuthUpdateRequest : AuthRequest
+    {
+        public string NewPassword { get; set; } = string.Empty;
     }
 
     public class AuthResponse

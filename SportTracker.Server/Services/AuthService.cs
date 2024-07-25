@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using SportTracker.Server.Models;
+using SportTracker.Server.Models.Users;
 
 namespace SportTracker.Server.Services
 {
@@ -16,7 +16,7 @@ namespace SportTracker.Server.Services
 
         public async Task Login(AuthRequest authRequest)
         {
-            AuthResponse response = _authRepository.Authenticate(authRequest);
+            User response = _authRepository.Authenticate(authRequest);
             var claims = new List<Claim> { new Claim(type: ClaimTypes.Name, response.Name), };
             var identity = new ClaimsIdentity(
                 claims,

@@ -17,7 +17,7 @@ namespace SportTracker.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
 
-            modelBuilder.Entity("SportTracker.Server.Models.SportEvent", b =>
+            modelBuilder.Entity("SportTracker.Server.Models.SportEvents.SportEvent", b =>
                 {
                     b.Property<int>("SportEventId")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace SportTracker.Migrations
                     b.ToTable("SportEvents");
                 });
 
-            modelBuilder.Entity("SportTracker.Server.Models.User", b =>
+            modelBuilder.Entity("SportTracker.Server.Models.Users.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

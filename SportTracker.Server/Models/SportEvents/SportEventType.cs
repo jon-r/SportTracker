@@ -1,4 +1,4 @@
-namespace SportTracker.Server.Models
+namespace SportTracker.Server.Models.SportEvents
 {
     public enum SportEventType
     {

@@ -1,4 +1,4 @@
-﻿using SportTracker.Server.Models;
+﻿using SportTracker.Server.Models.Users;
 
 namespace SportTracker.Server.Services
 {
