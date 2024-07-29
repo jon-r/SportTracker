@@ -1,8 +1,8 @@
-﻿using CsvHelper;
+﻿using System.Globalization;
+using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Components;
 using SportTracker.Server.Models.SportEvents;
-using System.Globalization;
 
 namespace SportTracker.Server.Components.Pages
 {

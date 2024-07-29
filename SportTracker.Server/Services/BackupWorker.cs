@@ -1,16 +1,16 @@
-﻿
-using Amazon.S3;
+﻿using Amazon.S3;
 using Amazon.S3.Model;
 
 namespace SportTracker.Server.Services
 {
     public class BackupWorkerService : BackgroundService
     {
-        // private readonly AppDbContext _appDbContext;
         private readonly AmazonS3Client amazonS3Client = new();
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            await OnTimerFiredAsync(stoppingToken);
+
             var countdown = SecondsTilMidnight();
 
             while (!stoppingToken.IsCancellationRequested)
@@ -23,7 +23,7 @@ namespace SportTracker.Server.Services
                     }
                     catch (Exception ex)
                     {
-                        // todo better way to log?
+                        // todo better way to log backups
                         Console.WriteLine("Backup worker failed!");
                         Console.WriteLine(ex);
                     }
@@ -38,28 +38,28 @@ namespace SportTracker.Server.Services
 
         private static int SecondsTilMidnight()
         {
-            // FIXME TEST VALUE
-            return (int)(DateTime.Today.AddSeconds(20) - DateTime.Now).TotalSeconds;
-
-            // return (int)(DateTime.Today.AddDays(1) - DateTime.Now).TotalSeconds;
+            return (int)(DateTime.Today.AddDays(1) - DateTime.Now).TotalSeconds;
         }
 
         private async Task<bool> OnTimerFiredAsync(CancellationToken stoppingToken)
         {
-            Console.WriteLine("tick!");
-            
+            Console.WriteLine("Database backup started");
+
             var bucketName = Environment.GetEnvironmentVariable("AWS_S3_BUCKET_NAME");
             var objectName = "SportTrackerServer.sqlite";
-            var file = Path.GetFileName($"../DB/{objectName}");
+            var file = $"../DB/{objectName}";
+            var backupFile = $"{file}.bak";
+
+            File.Copy(file, $"{file}.bak", true);
 
             var request = new PutObjectRequest
             {
                 BucketName = bucketName,
                 Key = $"DB_backup/{objectName}",
-                FilePath = file,
+                FilePath = backupFile,
             };
 
-            var response = await amazonS3Client.PutObjectAsync(request);
+            var response = await amazonS3Client.PutObjectAsync(request, stoppingToken);
 
             if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
             {
