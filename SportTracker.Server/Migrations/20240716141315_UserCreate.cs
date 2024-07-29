@@ -26,11 +26,6 @@ namespace SportTracker.Migrations
                     table.PrimaryKey("PK_Users", x => x.Id);
                 }
             );
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: ["Id", "Username", "Password", "PasswordHash"],
-                values: [1, "Admin", "*******", BCrypt.Net.BCrypt.HashPassword("change_me")]
-            );
         }
 
         /// <inheritdoc />

@@ -29,7 +29,7 @@
 </html>
 
 @code {
-    string version () => Assembly.GetEntryAssembly()
-    .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-    .InformationalVersion;
+    string version () => Assembly.GetEntryAssembly()!
+        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()!
+        .InformationalVersion;
 }

@@ -3,7 +3,6 @@ using SportTracker.Server.Components;
 using SportTracker.Server.Models;
 using SportTracker.Server.Models.SportEvents;
 using SportTracker.Server.Models.Users;
-using SportTracker.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +16,6 @@ builder.Services.AddDbContext<AppDbContext>(opts =>
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<ISportEventRepository, SportEventRepository>();
-builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder
     .Services.AddAuthentication()

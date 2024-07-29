@@ -1,6 +1,5 @@
 ﻿@page "/"
 @attribute [Authorize]
-@inject ISportEventRepository SportEventRepository
 
 <FormCard FormTitle="Submit Activity">
     @if (!string.IsNullOrEmpty(errorMessage))
@@ -37,24 +36,3 @@
         </div>
     </EditForm>
 </FormCard>
-
-@code {
-    string? errorMessage;
-    bool submitted = false;
-
-    [SupplyParameterFromForm]
-    public SportEventInput EventInput { get; set; } = new() { EventType = SportEventType.Swimming, };
-
-    public void OnSubmitEvent()
-    {
-        try
-        {
-            SportEventRepository.AddEvent(EventInput);
-            submitted = true;
-        }
-        catch (Exception ex)
-        {
-            errorMessage = ex.Message;
-        }
-    }
-}

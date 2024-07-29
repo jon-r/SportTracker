@@ -15,23 +15,32 @@ namespace SportTracker.Server.Models.Users
                 throw new AuthenticationException($"Incorrect username/password");
             }
 
-            return user;
+            return user!;
         }
 
-        public User UpdatePassword(AuthUpdateRequest authUpdateRequest) { 
+        public void UpdatePassword(AuthUpdateRequest authUpdateRequest)
+        {
             var user = Authenticate(authUpdateRequest);
 
-            if (user != null)
-            {
-                user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(authUpdateRequest.NewPassword);
-                user.Password = "**********";
+            user.SetHashedPassword(authUpdateRequest.NewPassword);
 
+            _appDbContext.Users.Entry(user).CurrentValues.SetValues(user);
+            _appDbContext.SaveChanges();
+        }
 
-                _appDbContext.Users.Entry(user).CurrentValues.SetValues(user);
-                _appDbContext.SaveChanges();
-            }
+        public User Register(User user)
+        {
+            user.SetHashedPassword(user.Password);
 
-            return user;
+            var result = _appDbContext.Users.Add(user);
+            _appDbContext.SaveChanges();
+
+            return result.Entity;
+        }
+
+        public bool GetUserExists()
+        {
+            return _appDbContext.Users.Any();
         }
     }
 }

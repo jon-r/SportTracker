@@ -1,11 +1,5 @@
 ﻿@page "/upload"
-
-@using CsvHelper
-@using CsvHelper.Configuration
-@using System.Globalization
-
 @attribute [Authorize]
-@inject ISportEventRepository SportEventRepository
 
 <EditForm method="post" Model="UploadInput" OnSubmit="UploadFile" Enhance FormName="UploadEvents" enctype="multipart/form-data">
     @if (submitted != null)
@@ -13,65 +7,16 @@
         <div class="alert alert-success">Submitted @(submitted) items!</div>
     }
     
-    <InputFile name="UploadInput.File" />
+    <InputFile name="UploadInput.File" required />
 
     <div class="d-flex justify-content-end">
         <button class="btn btn-primary" type="submit">Submit</button>
     </div>
 </EditForm>
 
-    @if (!string.IsNullOrEmpty(errorMessage))
+@if (!string.IsNullOrEmpty(errorMessage))
 {
     <div class="alert alert-warning">
         @errorMessage
     </div>
-}
-
-@code {
-    string? errorMessage;
-    int? submitted = null;
-
-    class SportEventUploadMap : ClassMap<SportEvent>
-    {
-        SportEventUploadMap()
-        {
-            AutoMap(CultureInfo.InvariantCulture);
-            Map(m => m.SportEventId).Ignore();
-        }
-    }
-
-    [SupplyParameterFromForm]
-    public FileUpload UploadInput { get; set; } = new();
-
-    void UploadFile()
-    {
-        submitted = 0;
-
-        try
-        {
-            using (var reader = new StreamReader(UploadInput.File.OpenReadStream()))
-            using (var csv = new CsvReader(reader, CultureInfo.CurrentCulture))
-            {
-                csv.Context.RegisterClassMap<SportEventUploadMap>();
-
-                csv.Read();
-                csv.ReadHeader();
-
-                while(csv.Read())
-                {
-                    var record = csv.GetRecord<SportEvent>();
-
-                    SportEventRepository.InsertEvent(record);
-
-                    submitted++;
-                }
-
-                Console.WriteLine($"success. {submitted} items added");
-            }
-        }
-        catch (Exception ex)
-        {
-            errorMessage = ex.Message;
-        }
-    }
 }
