@@ -1,11 +1,8 @@
-@inject IAuthService AuthService
-@inject NavigationManager NavigationManager
-
 <AuthorizeView>
     <Authorized>
         <strong class="fs-5 ms-auto">@context.User.Identity?.Name</strong>
 
-        <form class="d-inline-block" method="post" action="logout" @onsubmit="OnSubmiLogout" @formname="UserLogout">
+        <form class="d-inline-block" method="post" action="logout" @onsubmit="OnSubmitLogout" @formname="UserLogout">
             <AntiforgeryToken />
             <button class="btn btn-primary" type="submit">Log out</button>
         </form>
@@ -14,11 +11,3 @@
         <strong class="fs-5 ms-auto">Sign In</strong>
     </NotAuthorized>
 </AuthorizeView>
-
-@code {
-    async Task OnSubmiLogout()
-    {
-        await AuthService.Logout();
-        NavigationManager.NavigateTo("/login");
-    }
-}

@@ -1,8 +1,5 @@
 @page "/login"
 
-@inject IAuthService AuthService
-@inject NavigationManager NavigationManager
-
 <FormCard FormTitle="Login">
     @if (!string.IsNullOrEmpty(errorMessage))
     {
@@ -33,23 +30,3 @@
         </div>
     </EditForm>
 </FormCard>
-
-@code {
-    string? errorMessage;
-
-    [SupplyParameterFromForm]
-    public AuthRequest LoginInput { get; set; } = new();
-
-    public async Task OnSubmitLogin()
-    {
-        try
-        {
-            await AuthService.Login(LoginInput);
-            NavigationManager.NavigateTo("/");
-        }
-        catch (Exception ex)
-        {
-            errorMessage = ex.Message;
-        }
-    }
-}
