@@ -10,7 +10,7 @@ namespace SportTracker.Server.Components.Pages
 
         [Inject]
         private IAuthRepository AuthRepository { get; set; } = null!;
-        
+
         private string? errorMessage;
         private bool submitted = false;
 
@@ -21,7 +21,7 @@ namespace SportTracker.Server.Components.Pages
         {
             try
             {
-                UpdateInput.Username = HttpContextAccessor.HttpContext.User.Identity.Name;
+                UpdateInput.Username = HttpContextAccessor.HttpContext!.User.Identity!.Name!;
 
                 AuthRepository.UpdatePassword(UpdateInput);
                 submitted = true;

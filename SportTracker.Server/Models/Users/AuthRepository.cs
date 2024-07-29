@@ -18,7 +18,8 @@ namespace SportTracker.Server.Models.Users
             return user!;
         }
 
-        public void UpdatePassword(AuthUpdateRequest authUpdateRequest) { 
+        public void UpdatePassword(AuthUpdateRequest authUpdateRequest)
+        {
             var user = Authenticate(authUpdateRequest);
 
             user.SetHashedPassword(authUpdateRequest.NewPassword);

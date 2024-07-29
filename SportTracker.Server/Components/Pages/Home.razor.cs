@@ -7,12 +7,13 @@ namespace SportTracker.Server.Components.Pages
     {
         [Inject]
         private ISportEventRepository SportEventRepository { get; set; } = null!;
-        
+
         private string? errorMessage;
         private bool submitted = false;
 
         [SupplyParameterFromForm]
-        public SportEventInput EventInput { get; set; } = new() { EventType = SportEventType.Swimming };
+        public SportEventInput EventInput { get; set; } =
+            new() { EventType = SportEventType.Swimming };
 
         private void OnSubmitEvent()
         {

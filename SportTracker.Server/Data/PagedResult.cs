@@ -7,7 +7,7 @@ namespace SportTracker.Server.Data
 
         public PagedResult()
         {
-            Results = new List<T>();
+            Results = [];
         }
     }
 }

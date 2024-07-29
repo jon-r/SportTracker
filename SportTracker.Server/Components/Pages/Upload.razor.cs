@@ -1,5 +1,5 @@
-﻿using CsvHelper.Configuration;
-using CsvHelper;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Components;
 using SportTracker.Server.Models.SportEvents;
 using System.Globalization;
@@ -19,38 +19,36 @@ namespace SportTracker.Server.Components.Pages
     {
         [Inject]
         private ISportEventRepository SportEventRepository { get; set; } = null!;
-        
+
         private string? errorMessage;
         private int? submitted = null;
 
         [SupplyParameterFromForm]
         public FileUpload UploadInput { get; set; } = new();
 
-        void UploadFile()
+        private void UploadFile()
         {
             submitted = 0;
 
             try
             {
-                using (var reader = new StreamReader(UploadInput.File.OpenReadStream()))
-                using (var csv = new CsvReader(reader, CultureInfo.CurrentCulture))
+                using var reader = new StreamReader(UploadInput.File.OpenReadStream());
+                using var csv = new CsvReader(reader, CultureInfo.CurrentCulture);
+                csv.Context.RegisterClassMap<SportEventUploadMap>();
+
+                csv.Read();
+                csv.ReadHeader();
+
+                while (csv.Read())
                 {
-                    csv.Context.RegisterClassMap<SportEventUploadMap>();
+                    var record = csv.GetRecord<SportEvent>();
 
-                    csv.Read();
-                    csv.ReadHeader();
+                    SportEventRepository.InsertEvent(record);
 
-                    while (csv.Read())
-                    {
-                        var record = csv.GetRecord<SportEvent>();
-
-                        SportEventRepository.InsertEvent(record);
-
-                        submitted++;
-                    }
-
-                    Console.WriteLine($"success. {submitted} items added");
+                    submitted++;
                 }
+
+                Console.WriteLine($"success. {submitted} items added");
             }
             catch (Exception ex)
             {

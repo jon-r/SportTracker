@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components;
 using SportTracker.Server.Models.Users;
 using System.Security.Claims;
@@ -19,7 +19,8 @@ namespace SportTracker.Server.Components.Pages
         private string? errorMessage;
 
         [SupplyParameterFromForm]
-        public User NewUser { get; set; } = new() { Username = string.Empty, Password = string.Empty};
+        public User NewUser { get; set; } =
+            new() { Username = string.Empty, Password = string.Empty };
 
         private bool UserExists => AuthRepository.GetUserExists();
 
@@ -29,22 +30,20 @@ namespace SportTracker.Server.Components.Pages
             {
                 // right now project only supports a single user, so blocking future registrations
                 errorMessage = "Cannot register multiple users";
-                
+
                 return;
             }
-            
+
             try
             {
                 User response = AuthRepository.Register(NewUser);
-                var claims = new List<Claim> {
-                new(type: ClaimTypes.Name, response.Username),
-            };
+                var claims = new List<Claim> { new(type: ClaimTypes.Name, response.Username), };
                 var identity = new ClaimsIdentity(
                     claims,
                     CookieAuthenticationDefaults.AuthenticationScheme
                 );
 
-                await HttpContextAccessor.HttpContext.SignInAsync(
+                await HttpContextAccessor.HttpContext!.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(identity),
                     new AuthenticationProperties { IsPersistent = true, RedirectUri = "/" }

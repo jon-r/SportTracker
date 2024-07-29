@@ -13,7 +13,7 @@ namespace SportTracker.Server.Components.Layout
 
         private async Task OnSubmitLogout()
         {
-            await HttpContextAccessor.HttpContext.SignOutAsync();
+            await HttpContextAccessor.HttpContext!.SignOutAsync();
 
             NavigationManager.NavigateTo("/login");
         }
