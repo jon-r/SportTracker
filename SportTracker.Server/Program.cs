@@ -3,6 +3,7 @@ using SportTracker.Server.Components;
 using SportTracker.Server.Models;
 using SportTracker.Server.Models.SportEvents;
 using SportTracker.Server.Models.Users;
+using SportTracker.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ builder
     });
 builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
+
+builder.Services.AddHostedService<BackupWorkerService>();
 
 var app = builder.Build();
 
