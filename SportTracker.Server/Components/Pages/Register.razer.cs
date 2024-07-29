@@ -6,8 +6,10 @@ using System.Security.Claims;
 
 namespace SportTracker.Server.Components.Pages
 {
-    public partial class Login
+    public partial class Register
     {
+        // todo some way to limit adding extra users
+
         [Inject]
         private IHttpContextAccessor HttpContextAccessor { get; set; } = null!;
 
@@ -16,16 +18,24 @@ namespace SportTracker.Server.Components.Pages
 
         private string? errorMessage;
 
+        [SupplyParameterFromForm]
+        public User NewUser { get; set; } = new() { Username = string.Empty, Password = string.Empty};
+
         private bool UserExists => AuthRepository.GetUserExists();
 
-        [SupplyParameterFromForm]
-        public AuthRequest LoginInput { get; set; } = new();
-
-        private async Task OnSubmitLogin()
+        private async Task OnSubmitRegister()
         {
+            if (UserExists)
+            {
+                // right now project only supports a single user, so blocking future registrations
+                errorMessage = "Cannot register multiple users";
+                
+                return;
+            }
+            
             try
             {
-                User response = AuthRepository.Authenticate(LoginInput);
+                User response = AuthRepository.Register(NewUser);
                 var claims = new List<Claim> {
                 new(type: ClaimTypes.Name, response.Username),
             };
@@ -37,7 +47,7 @@ namespace SportTracker.Server.Components.Pages
                 await HttpContextAccessor.HttpContext.SignInAsync(
                     CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(identity),
-                    new AuthenticationProperties { IsPersistent = true }
+                    new AuthenticationProperties { IsPersistent = true, RedirectUri = "/" }
                 );
             }
             catch (Exception ex)

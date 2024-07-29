@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Logging.Abstractions;
 using SportTracker.Server.Models.Users;
 
 namespace SportTracker.Server.Components.Pages
 {
     public partial class UpdatePassword
     {
+        [Inject]
+        private IHttpContextAccessor HttpContextAccessor { get; set; } = null!;
+
         [Inject]
         private IAuthRepository AuthRepository { get; set; } = null!;
         
@@ -19,7 +21,8 @@ namespace SportTracker.Server.Components.Pages
         {
             try
             {
-                // todo get username from context
+                UpdateInput.Username = HttpContextAccessor.HttpContext.User.Identity.Name;
+
                 AuthRepository.UpdatePassword(UpdateInput);
                 submitted = true;
             }

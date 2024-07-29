@@ -4,6 +4,10 @@ namespace SportTracker.Server.Models.Users
     {
         User Authenticate(AuthRequest authRequest);
 
-        User UpdatePassword(AuthUpdateRequest authUpdateRequest);
+        void UpdatePassword(AuthUpdateRequest authUpdateRequest);
+
+        User Register(User user);
+
+        bool GetUserExists();
     }
 }

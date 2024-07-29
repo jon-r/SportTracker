@@ -1,6 +1,6 @@
-@page "/login"
+﻿@page "/register"
 
-<FormCard FormTitle="Login">
+<FormCard FormTitle="Register">
     @if (!string.IsNullOrEmpty(errorMessage))
     {
         <div class="alert alert-warning">
@@ -8,29 +8,24 @@
         </div>
     }
 
-    <EditForm method="post" Model="LoginInput" OnSubmit="OnSubmitLogin" FormName="UserLogin">
+    <EditForm method="post" Model="NewUser" OnSubmit="OnSubmitRegister" FormName="UserRegister">
         <label class="form-label" for="username">Username:</label>
         <div class="input-group mb-3">
             <span class="input-group-text">
                 <IconFace />
             </span>
-            <InputText class="form-control" @bind-Value="LoginInput.Username" id="username" required />
+            <InputText class="form-control" @bind-Value="NewUser.Username" id="username" required />
         </div>
 
         <label class="form-label" for="password">Password:</label>
         <div class="input-group mb-3">
             <span class="input-group-text">
-               <IconLock />
+                <IconLock />
             </span>
-            <InputText class="form-control" @bind-Value="LoginInput.Password" type="password" id="password" required />
+            <InputText class="form-control" @bind-Value="NewUser.Password" type="password" id="password" required />
         </div>
 
         <div class="d-flex justify-content-between">
-            @if (!UserExists)
-            {
-                <a class="btn btn-danger" href="register">Create User</a>
-            }
-
             <button class="btn btn-primary" type="submit">Submit</button>
         </div>
     </EditForm>
